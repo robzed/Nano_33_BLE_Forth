@@ -1,4 +1,15 @@
+
+# Sloeber/Eclipse Settings
 /Release/
 /sloeber.ino.cpp
+.settings/
+spec.d
 
+# Local specific settings
 for_reference_do_not_track/
+.DS_Store
+
+# Editor ignores
+*.swp
+
+
