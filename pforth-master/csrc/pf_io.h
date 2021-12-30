@@ -54,7 +54,11 @@ void ioTerm( void );
 ** API must match that defined above for the stubs.
 */
 /* If your sdTerminalIn echos, define PF_KEY_ECHOS. */
-        #include PF_USER_CHARIO
+
+#define STRINGIFY_MACRO(x) STR_(x)
+#define STR_(x) #x
+
+        #include STRINGIFY_MACRO(PF_USER_CHARIO)
     #else
         #define sdEnableInput()     /* sdTerminalOut( PF_CHAR_XON ) */
         #define sdDisableInput()    /* sdTerminalOut( PF_CHAR_XOFF ) */

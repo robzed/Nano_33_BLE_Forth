@@ -22,7 +22,17 @@
 **
 ***************************************************************/
 
+//#define PF_FLOAT_IS_DOUBLE 1
+
+/* round and roundf are c99 */
+
+#if PF_FLOAT_IS_DOUBLE
 typedef double PF_FLOAT;
+#define fp_round  round
+#else
+typedef float PF_FLOAT;
+#define fp_round  roundf
+#endif
 
 /* Define pForth specific math functions. */
 
@@ -42,6 +52,5 @@ typedef double PF_FLOAT;
 #define fp_sqrt   sqrt
 #define fp_tan    tan
 #define fp_tanh   tanh
-#define fp_round  round
 
 #endif

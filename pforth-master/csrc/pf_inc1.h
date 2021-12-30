@@ -28,7 +28,7 @@
 #endif
 
 #ifdef PF_NO_STDIO
-    #define NULL  ((void *) 0)
+    /* #define NULL  ((void *) 0) */
     #define EOF   (-1)
 #else
     #include <stdio.h>
