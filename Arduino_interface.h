@@ -22,6 +22,14 @@ cell_t ARDUINO_micros(void);
 cell_t ARDUINO_millis(void);
 
 
+// stubs for PC build
+#ifndef ARDUINO_ARDUINO_NANO33BLE
+void ARDUINO_delay( cell_t val ) { }
+void ARDUINO_delayMicroseconds(cell_t val) { }
+cell_t ARDUINO_micros(void) { return 0; }
+cell_t ARDUINO_millis(void) { return 0; }
+#endif
+
 
 #ifdef __cplusplus
 }

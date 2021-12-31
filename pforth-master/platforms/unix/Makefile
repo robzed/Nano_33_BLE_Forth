@@ -14,6 +14,7 @@ SRCDIR       = ../..
 PFORTHDIR    = $(SRCDIR)
 CSRCDIR      = $(PFORTHDIR)/csrc
 FTHDIR       = $(PFORTHDIR)/fth
+CUSTOMDIR	 = $(PFORTHDIR)/..
 
 PFDICAPP     = pforth
 PFORTHDIC    = pforth.dic
@@ -52,16 +53,17 @@ PFINCLUDES = pf_all.h pf_cglue.h pf_clib.h pf_core.h pf_float.h \
 	pfcompil.h pfdicdat_arm.h pfinnrfp.h pforth.h
 PFBASESOURCE = pf_cglue.c pf_clib.c pf_core.c pf_inner.c \
 	pf_io.c pf_io_none.c pf_main.c pf_mem.c pf_save.c \
-	pf_text.c pf_words.c pfcompil.c pfcustom.c
+	pf_text.c pf_words.c pfcompil.c pfcustom.c ../../nano33ble_custom.c
 PFSOURCE = $(PFBASESOURCE) $(IO_SOURCE)
 
 VPATH = .:$(CSRCDIR):$(CSRCDIR)/posix:$(CSRCDIR)/stdio:$(CSRCDIR)/win32_console:$(CSRCDIR)/win32
 
 XCFLAGS = $(CCOPTS)
-XCPPFLAGS = -DPF_SUPPORT_FP -D_DEFAULT_SOURCE -D_GNU_SOURCE
+XCPPFLAGS = -DPF_SUPPORT_FP -D_DEFAULT_SOURCE -D_GNU_SOURCE -DPF_USER_CUSTOM="nano33ble_custom.c"
+
 XLDFLAGS = $(WIDTHOPT)
 
-CPPFLAGS = -I. $(XCPPFLAGS)
+CPPFLAGS = -I. -I$(CUSTOMDIR) $(XCPPFLAGS)
 CFLAGS = $(XCFLAGS)
 LDFLAGS = $(XLDFLAGS)
 

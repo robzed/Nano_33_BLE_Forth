@@ -18,7 +18,9 @@
 #undef MIN
 #undef MAX
 #undef CODE_SIZE
+#if ARDUINO_ARDUINO_NANO33BLE
 #include <mbed_stats.h>
+#endif
 #undef MIN
 #undef MAX
 #undef CODE_SIZE
@@ -38,8 +40,12 @@ static cell_t Arduino_IFVer(void)
 static ucell_t heap_stats(void)
 {
 	// Grab the heap statistics
+#if ARDUINO_ARDUINO_NANO33BLE
  static mbed_stats_heap_t heap_stats;
  mbed_stats_heap_get(&heap_stats);
+#else
+ static int heap_stats = 0;
+#endif
  return (ucell_t)&heap_stats;
 }
 
@@ -146,7 +152,7 @@ static ucell_t heap_stats(void)
 
 // End of CUSTOM_FUNCTION_LIST list of custom functions, names, etc.
 
-extern "C" const CFunc0 CustomFunctionTable[];
+const CFunc0 CustomFunctionTable[];
 
 #define X(func, name_str, ret, params, comment) (CFunc0) func,
 
@@ -159,7 +165,7 @@ const CFunc0 CustomFunctionTable[]=
 #undef X
 #define X(func, name_str, ret, params, comment) err = CreateGlueToC( name_str, i++, ret, params); if( err < 0 ) return err;
 
-extern "C" Err CompileCustomFunctions( void )
+Err CompileCustomFunctions( void )
 {
     Err err;
     int i = 0;

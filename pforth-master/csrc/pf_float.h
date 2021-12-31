@@ -22,7 +22,7 @@
 **
 ***************************************************************/
 
-//#define PF_FLOAT_IS_DOUBLE 1
+/*#define PF_FLOAT_IS_DOUBLE 1  */
 
 /* round and roundf are c99 */
 

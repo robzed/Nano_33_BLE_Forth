@@ -12,4 +12,10 @@ for_reference_do_not_track/
 # Editor ignores
 *.swp
 
+# make build
+*.o
+*.eo
+pforth-master/platforms/unix/pforth*
+pforth-master/platforms/unix/pfdicdat.h
+
 

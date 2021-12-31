@@ -103,6 +103,55 @@ void NeoPixel_rainbow(ucell_t object, ucell_t first_hue, cell_t reps,
 		ucell_t saturation, ucell_t brightness,
 		ucell_t gammify);
 
+
+// stubs for PC build
+#ifndef ARDUINO_ARDUINO_NANO33BLE
+// Constructor: number of LEDs, pin number, LED type
+ucell_t NeoPixel_create(ucell_t num_leds, cell_t pin, ucell_t type) { return 0;}
+ucell_t NeoPixel_create_default(void) { return 0;}
+void NeoPixel_destroy(ucell_t object){}
+
+
+// pass in a type string and get a type
+cell_t NeoPixel_getPixelType(cell_t str, ucell_t len) { return 0;}
+
+
+// should we provide a method where these can be allocated on the dictionary?
+//size_t sizeof_NeoPixel(void);
+//void* create_NeoPixel_fixed_(void* storage, uint16_t num_leds, int16_t pin = 6, neoPixelType type = NEO_GRB + NEO_KHZ800);
+//void* create_NeoPixel_default_fixed(void* storage)
+//void destroy_NeoPixel_fixed(void* object);
+
+// see the Adafruit_NeoPixel class for descriptions
+void NeoPixel_begin(ucell_t object){}
+void NeoPixel_show(ucell_t object){}
+void NeoPixel_setPin(ucell_t object, cell_t p){}
+void NeoPixel_setPixelColor(ucell_t object, ucell_t n, ucell_t r, ucell_t g, ucell_t b){}
+void NeoPixel_setPixelColorW(ucell_t object, ucell_t n, ucell_t r, ucell_t g, ucell_t b, ucell_t w){}
+void NeoPixel_setPixelColor32(ucell_t object, ucell_t n, ucell_t c){}
+void NeoPixel_fill(ucell_t object, ucell_t c, ucell_t first, ucell_t count){}
+void NeoPixel_setBrightness(ucell_t object, ucell_t brightness){}
+void NeoPixel_clear(ucell_t object){}
+void NeoPixel_updateLength(ucell_t object, ucell_t n){}
+void NeoPixel_updateType(ucell_t object, ucell_t t){}
+
+ucell_t NeoPixel_canShow(ucell_t object) { return 0;}
+ucell_t NeoPixel_getPixels(ucell_t object) { return 0;}
+ucell_t NeoPixel_getBrightness(ucell_t object) { return 0;}
+cell_t NeoPixel_getPin(ucell_t object) { return 0;}
+ucell_t NeoPixel_numPixels(ucell_t object) { return 0;}
+ucell_t NeoPixel_getPixelColor(ucell_t object, ucell_t n) { return 0;}
+ucell_t NeoPixel_sine8(ucell_t x) { return 0;}
+ucell_t NeoPixel_gamma8(ucell_t x) { return 0;}
+ucell_t NeoPixel_Color(ucell_t r, ucell_t g, ucell_t b) { return 0;}
+ucell_t NeoPixel_ColorW(ucell_t r, ucell_t g, ucell_t b, ucell_t w) { return 0;}
+ucell_t NeoPixel_ColorHSV(ucell_t hue, ucell_t sat, ucell_t val) { return 0;}
+ucell_t NeoPixel_gamma32(ucell_t x) { return 0;}
+void NeoPixel_rainbow(ucell_t object, ucell_t first_hue, cell_t reps,
+		ucell_t saturation, ucell_t brightness,
+		ucell_t gammify){}
+#endif
+
 #ifdef __cplusplus
 }
 #endif

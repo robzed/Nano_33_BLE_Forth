@@ -28,6 +28,21 @@ cell_t IMU_readMagneticField(cell_t ptr_fx, cell_t ptr_fy, cell_t ptr_fz);
 void IMU_magneticFieldSampleRate(cell_t rate_float_ptr);
 cell_t IMU_magneticFieldAvailable(void);
 
+// stubs for PC build
+#ifndef ARDUINO_ARDUINO_NANO33BLE
+cell_t IMU_begin(void) { return 0; }
+void IMU_end(void) { }
+cell_t IMU_readAcceleration(cell_t ptr_fx, cell_t ptr_fy, cell_t ptr_fz) { return 0; }
+cell_t IMU_readGyroscope(cell_t ptr_fx, cell_t ptr_fy, cell_t ptr_fz) { return 0; }
+cell_t IMU_accelerationAvailable(void) { return 0; }
+cell_t IMU_gyroscopeAvailable(void) { return 0; }
+void IMU_accelerationSampleRate(cell_t sample_rate_float_ptr) { }
+void IMU_gyroscopeSampleRate(cell_t sample_rate_float_ptr) { }
+cell_t IMU_readMagneticField(cell_t ptr_fx, cell_t ptr_fy, cell_t ptr_fz) { return 0; }
+void IMU_magneticFieldSampleRate(cell_t rate_float_ptr) { }
+cell_t IMU_magneticFieldAvailable(void) { return 0; }
+#endif
+
 #ifdef __cplusplus
 }
 #endif
