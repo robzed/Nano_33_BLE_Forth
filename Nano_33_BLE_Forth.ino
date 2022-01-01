@@ -14,10 +14,9 @@
 #include "pforth-master/csrc/pforth.h"
 
 void setup() {
-    // all done by Forth
+    Serial.begin(115200);
+    // all other setup done by Forth
 }
-
-void(* resetFunc) (void) = 0; //declare reset function @ address 0
 
 void loop() {
     // ignore the loop in main()
@@ -27,6 +26,17 @@ void loop() {
     pfDoForth( DicName, SourceName, IfInit);
 
     // user probably typed BYE to get here
+    Serial.println("Forth exit");
+	pinMode(LED_BUILTIN, OUTPUT);
+    for(int i = 10; i > 0; i--) {
+        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on
+    	delay(500);
+        digitalWrite(LED_BUILTIN, LOW);   // turn the LED off
+        delay(500);
+        Serial.print("Resetting in ");
+        Serial.println(i);
+    }
 
-    resetFunc();  //call reset to clean up.
+    NVIC_SystemReset();
+
 }

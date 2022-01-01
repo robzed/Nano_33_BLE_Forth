@@ -42,13 +42,11 @@ int  sdTerminalFlush( void )
 
 void sdTerminalInit( void )
 {
-    Serial.begin(115200);
     Serial.println(F("\nNano 33 BLE pForth\n"));
 }
 
 void sdTerminalTerm( void )
 {
-    Serial.end();   // not strictly needed, but still ...
 }
 
 #ifdef __cplusplus
