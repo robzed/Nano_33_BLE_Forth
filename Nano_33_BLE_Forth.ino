@@ -15,6 +15,14 @@
 
 void setup() {
     Serial.begin(115200);
+	pinMode(LED_BUILTIN, OUTPUT);
+	// allow 2 seconds for us to connect with serial terminal
+    for(int i = 10; i > 0; i--) {
+        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on
+    	delay(100);
+        digitalWrite(LED_BUILTIN, LOW);   // turn the LED off
+        delay(100);
+    }
     // all other setup done by Forth
 }
 
@@ -27,7 +35,6 @@ void loop() {
 
     // user probably typed BYE to get here
     Serial.println("Forth exit");
-	pinMode(LED_BUILTIN, OUTPUT);
     for(int i = 10; i > 0; i--) {
         digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on
     	delay(500);
