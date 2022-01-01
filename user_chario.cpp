@@ -26,6 +26,11 @@ int  sdTerminalEcho( char c )
 }
 int  sdTerminalIn( void )
 {
+	while(Serial.available()==0)
+	{
+		// idle for a while
+	    delay(20);
+	}
     return Serial.read();       // character or -1 if no character available
 }
 
