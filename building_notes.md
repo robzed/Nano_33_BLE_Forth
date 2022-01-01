@@ -115,9 +115,29 @@ It displays
          Cell Size       = 8 
          Little  Endian Dictionary
 
-Move the pre-made dictionary (pfdicdat.h) from the build directory (unix) to premade/ folder.
+However, the cell size for this build is 8. The Arduino Nano 33 BLE is a 32-bit processor, so we need a matching cell size. 
+
+The header has been changed to contain the information:
+
+    #define IF_LITTLE_ENDIAN  (0x00000001)
+    #define SIZE_STATIC_DIC_CELL  (0x00000004)
+    #define SIZE_STATIC_DIC_FLOAT  (0x00000004)
+
+When you have build on a 32-bit machine (e.g. a VM like VirtualBox running 32-bit Linux, or a Raspberry Pi) then move the pre-made dictionary (pfdicdat.h) from the build directory (unix) to premade/ folder. This will be used by the Arduino build to create a binary.
 
 Clean and rebuild BLE project.
+
+You now have a binary that you can program into the board.
+
+
+Programming the Arduino Nano 33 BLE board
+=========================================
+
+You can build the code and program (using, for instance Sloeber), or program the binary using bossac directly
+
+bossac --port=<your-port-number> -U -i -e -w led_display2.ino.bin -R 
+
+NOTICE: IF the Arduino doesn't go into Bootloader mode you can click the reset button twice. The build-in yellow/orange LED will glow slowly from off to on and vice versa.
 
 
  
