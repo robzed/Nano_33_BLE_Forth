@@ -1,6 +1,9 @@
 A Forth for Arduino Nano 33 BLE.
 
-Based on pForth.
+Based on pForth, with some minor modifications and an API to Nano 33 BLE specific extensions. 
+
+** NOTE: THIS PROJECT ISN'T FUNCTIONAL YET **
+
 
 
 # Current Arduino Nano 33 BLE Support
