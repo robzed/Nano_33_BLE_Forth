@@ -796,6 +796,21 @@ PForthDictionary pfLoadStaticDictionary( void )
         goto error;
     }
 
+    if(SIZE_STATIC_DIC_CELL != sizeof(cell_t))
+    {
+        pfReportError("pfLoadStaticDictionary", PF_ERR_CELL_SIZE_CONFLICT );
+        goto error;
+    }
+
+#ifdef PF_SUPPORT_FP
+            if( SIZE_STATIC_DIC_FLOAT != sizeof(PF_FLOAT) )
+#else
+            if( SIZE_STATIC_DIC_FLOAT != 0 )
+#endif
+    {
+        pfReportError("pfLoadStaticDictionary", PF_ERR_FLOAT_CONFLICT );
+        goto error;
+    }
 
 #ifndef PF_EXTRA_HEADERS
     #define PF_EXTRA_HEADERS  (20000)

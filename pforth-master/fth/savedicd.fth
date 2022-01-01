@@ -150,6 +150,8 @@ variable SDAD-BUFFER-FID
     c" RELCONTEXT" context @ namebase - sdad.define
     c" CODEPTR" here codebase - sdad.define
     c" IF_LITTLE_ENDIAN" IS.LITTLE.ENDIAN? IF 1 ELSE 0 THEN sdad.define
+    c" SIZE_STATIC_DIC_CELL" cell sdad.define
+    c" SIZE_STATIC_DIC_FLOAT" C" FLOAT+" find nip IF 0 float+ ELSE 0 THEN sdad.define
 
 ." Saving Names" cr
     s" static const uint8_t MinDicNames[] = {" sdad.type
