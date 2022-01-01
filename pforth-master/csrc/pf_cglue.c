@@ -26,7 +26,7 @@ extern CFunc0 CustomFunctionTable[];
 /***************************************************************/
 cell_t CallUserFunction( cell_t Index, int32_t ReturnMode, int32_t NumParams )
 {
-    cell_t P1, P2, P3, P4, P5;
+    cell_t P1, P2, P3, P4, P5, P6;
     cell_t Result = 0;
     CFunc0 CF;
 
@@ -69,6 +69,15 @@ DBUG(("CallUserFunction: Index = %d, ReturnMode = %d, NumParams = %d\n",
         P2 = POP_DATA_STACK;
         P1 = POP_DATA_STACK;
         Result = ((CFunc5) CF) ( P1, P2, P3, P4, P5 );
+        break;
+    case 6:
+        P6 = POP_DATA_STACK;
+        P5 = POP_DATA_STACK;
+        P4 = POP_DATA_STACK;
+        P3 = POP_DATA_STACK;
+        P2 = POP_DATA_STACK;
+        P1 = POP_DATA_STACK;
+        Result = ((CFunc6) CF) ( P1, P2, P3, P4, P5, P6 );
         break;
     default:
         pfReportError("CallUserFunction", PF_ERR_NUM_PARAMS);

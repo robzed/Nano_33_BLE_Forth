@@ -28,6 +28,7 @@ typedef cell_t (*CFunc2)( cell_t P1, cell_t P2 );
 typedef cell_t (*CFunc3)( cell_t P1, cell_t P2, cell_t P3 );
 typedef cell_t (*CFunc4)( cell_t P1, cell_t P2, cell_t P3, cell_t P4 );
 typedef cell_t (*CFunc5)( cell_t P1, cell_t P2, cell_t P3, cell_t P4, cell_t P5 );
+typedef cell_t (*CFunc6)( cell_t P1, cell_t P2, cell_t P3, cell_t P4, cell_t P5, cell_t P6 );
 
 #ifdef __cplusplus
 extern "C" {
