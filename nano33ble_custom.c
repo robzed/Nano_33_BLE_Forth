@@ -135,7 +135,7 @@ static ucell_t heap_stats(void)
 	/* Flash functions */																					\
 	X( read_write_flash_size, "(R/W_Size)", 			C_RETURNS_VALUE, 0, "( -- u ) flash block size" )	\
 	X( number_of_flash_blocks, "(R/W_#Blocks)", 		C_RETURNS_VALUE, 0, "( -- u ) Number of flash blocks available" )	\
-	X( read_write_flash_block, "(R/W)", 				C_RETURNS_VALUE, 3, "( addr block# read? -- error ) read or write flash block" )				\
+	X( read_write_flash_block, "(R/W)", 				C_RETURNS_VALUE, 3, "( buffer-addr block# read? -- error ) read or write flash block" )				\
 																												\
 	/* IMU functions, also see https://www.arduino.cc/reference/en/libraries/arduino_lsm9ds1/ */																							\
 	X( IMU_begin, "IMU_BEGIN", 										C_RETURNS_VALUE, 0, "( -- success-flag ) init IMU" )											\

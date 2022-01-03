@@ -38,6 +38,15 @@ See https://www.arduino.cc/reference/en/
  * 'delayMicroseconds'
 
 
+# Accessing the terminal
+
+pForth uses ANSI escape sequences. These haven't been changed from the original.
+
+This is the command line that I use to access pForth on the Nano 33 BLE:
+    picocom --baud 115200 --imap lfcrlf /dev/cu.usbmodem1421201
+
+
+
 # Adding User Functionality
 
 There are three ways. 
@@ -95,7 +104,7 @@ the top of 'Flash_interface.cpp' for two options that give options more advanced
 
 ## Block Words
 
-The following words are supported:
+The following words will be supported in future:
  * LIST ( n -- ) show the Forth block n, shown as 16 lines of 64 characters.
  * SCR  ( -- addr ) address of a variable that hold the last block shown by list.
  * LOAD ( n -- ) load (interpret) the Forth block n
@@ -138,7 +147,8 @@ No interpretation is given to characters > 128, so you can set your terminal to 
 you will get less than 64 characters per line. Conversely you light use Windows-1252 or other 8 bit 
 character sets. Obviously if you share code with others you'll need to specify the encoding.
 
-Forth doesn't care - as long as the byte code is >32, it will be fine.
+Forth doesn't care - as long as the byte code is >32, it will be fine, except 0xFF is used as a blank flash
+in Forth word 'LIST'.
 
 
 
@@ -195,5 +205,7 @@ The forth blocks are not used for basic functionality and are entirely available
 # Future
 
  * Add more standard Arduino functions
+ * Create a split dictionary, so copy to RAM isn't required (maybe just name area, not code area that has variables)
+ * Add support for multi-coloured LED
  * Support other features of Arduino Nano 33 BLE Sense board
 
