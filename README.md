@@ -91,7 +91,7 @@ On loading a single block, internally it also caches another 3 blocks so that it
 back an entire 4K flash block when saved. The buffers are algined with the flash block start.
 
 You can avoid using any Forth block words, and just use the raw (R/W) word, which reads or writes (actually 
-erase then writes) a 4KByte flash block. NOTICE: The first block is 1. 
+erase then writes) a 4KByte flash block. NOTICE: The first block is 0. 
 
 
 ## Alternatives Considered
@@ -105,30 +105,34 @@ the top of 'Flash_interface.cpp' for two options that give options more advanced
 ## Block Words
 
 The following words will be supported in future:
- * LIST ( n -- ) show the Forth block n, shown as 16 lines of 64 characters.
+ * LIST ( u -- ) show the Forth block u, shown as 16 lines of 64 characters.
  * SCR  ( -- addr ) address of a variable that hold the last block shown by list.
- * LOAD ( n -- ) load (interpret) the Forth block n
- * THRU ( n m -- ) load (interpret) the Forth blocks n to m, inclusive.
+ * LOAD ( u -- ) load (interpret) the Forth block u
  * BLOCK ( u -- a-addr) return a buffer for the block. If necessary (not already cached) read the block from Flash
  * BUFFER ( u -- a-addr) return an empty buffer for block
  * UPDATE ( -- ) mark the curr block as to be written.
- * UPDATED? ( u -- f ) is the block u is marked updated?
  * EMPTY-BUFFERS ( -- ) Drop all buffers without saving (effectively mark all internal buffers as unassigned).
- * EMPTY-BUFFER ( n -- ) drop buffer without saving, losing changes.
  * SAVE-BUFFERS ( -- ) Save all changed blocks to Flash. Mark as not updated.
- * SAVE-BUFFER ( n -- ) save a specific block to Flash (if changed). Mark as not updated.
  * FLUSH ( -- ) save-buffers then empty_buffers
- * +LOAD ( n -- ) load the block specified as the current block + n - used with load/thru to chain. NOTE: If current in THRU - this will override. 
- * +THRU ( n1 n2 -- ) load current block + n1 to current block + n2 - used with load/thru to chain. NOTE: If current in THRU - this will override.
- * EDIT ( -- ) basic screen editor of the current (most recent) block
- * (R/W)  (addr n f -- errCode ) Low level Flash block read/write word. flag 1=read, 0=write, addr = buffer address, n=block number. Always transfers 4096 bytes!
+ * RXTEXTBLOCK ( u -- ) write a block from the input terminal directly to a block. LF selects the next line (skipping next 64)
+ * (R/W)  (addr u f -- errCode ) Low level Flash block read/write word. flag 1=read, 0=write, addr = buffer address, u=flash block number. Always transfers 4096 bytes!
 
  Notice buffer address returned by BLOCK and BUFFER are transient. See Forth standard 7.3.2. 
  
+ ## Future Block Words
+
+ * EDIT ( -- ) basic screen editor of the current (most recent) block referenced by LIST
+ * THRU ( u1 u2 -- ) load (interpret) the Forth blocks u1 to u2, inclusive.
+ * UPDATED? ( u -- f ) is the block u is marked updated?
+ * EMPTY-BUFFER ( u -- ) drop buffer without saving, losing changes.
+ * SAVE-BUFFER ( u -- ) save a specific block to Flash (if changed). Mark as not updated.
+ * +LOAD ( u -- ) load the block specified as the current block + u - used with load/thru to chain. NOTE: If current in THRU - this will override. 
+ * +THRU ( u1 u2 -- ) load current block + u1 to current block + u2 - used with load/thru to chain. NOTE: If current in THRU - this will override.
+ 
  ## Block notes
 
-First block is 1.
- 
+First Forth block number is 1. (But 4K Flash blocks start at 0).
+
 Sometimes 'shadow screens' are used - code in odd block numbers, comments in even block 
 numbers, but this is by convention and the block system does not enforce this.  
 

@@ -131,10 +131,10 @@ extern "C" ucell_t read_write_flash_block(ucell_t address, ucell_t block_number,
 
 	// sanity check
 	static bool block_size_ok = (flash_block_size == device.get_erase_size());
-	if(block_size_ok && block_number > 0 && block_number <= number_of_blocks)
+	if(block_size_ok && block_number < number_of_blocks)
 	{
 		void *buffer = (void*)address;
-		mbed::bd_addr_t addr = (block_number-1) * flash_block_size;
+		mbed::bd_addr_t addr = block_number * flash_block_size;
 
 		if(read_flag)
 		{
