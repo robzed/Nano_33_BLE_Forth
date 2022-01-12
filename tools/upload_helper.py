@@ -5,6 +5,7 @@ import time
 import sys
 
 filenames = [ "../blocks.fth", "../blocks_test.fth" ]
+#filenames = [ "../blocks_test.fth" ]
 
 def write_chars(ser, data):
     for value in data:

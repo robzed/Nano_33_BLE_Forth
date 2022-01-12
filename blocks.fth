@@ -44,8 +44,8 @@ EMPTY-BUFFERS
 : UPDATE ( -- ) true (dirty) ! ; 
 
 : (checkerr) ( err -- ) dup if CR ." Flash Err " . ABORT else drop then ;
-: (readflash) ( buffer flash-block -- ) 1 .S (R/W) (checkerr) ." <read-Flash> " ;
-: (writeflash) ( buffer flash-block -- ) 0 .S (R/W) (checkerr) ." <write-Flash> " ;
+: (readflash) ( buffer flash-block -- ) 1 (R/W) (checkerr) ;
+: (writeflash) ( buffer flash-block -- ) 0 (R/W) (checkerr) ;
 
 : SAVE-BUFFERS ( -- ) (dirty) @ if (buffer) (fblkheld) @ (writeflash) false (dirty) ! then ;
 : (load-buffer) ( flash-block -- ) (buffer) swap dup (fblkheld) ! (readflash) false (dirty) ! ;

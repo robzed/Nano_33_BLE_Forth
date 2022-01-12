@@ -10,15 +10,15 @@
 ANEW TASK-BLOCKS_TEST.FTH
 decimal
 
-: (blankbuf) ( buffer -- ) ." (blankbuf)> " .s BLOCKSIZE 32 fill ; 
-: (bufwr) ( caddr u buffer -- buffer+u ) ." (bufwr)> " .s 2dup + >r swap cmove r> ;
+: (blankbuf) ( buffer -- ) BLOCKSIZE 32 fill ; 
+: (bufwr) ( caddr u buffer -- buffer+u ) 2dup + >r swap cmove r> ;
 : (buftest) ( num buffer -- ) dup (blankbuf) S" Screen " rot 
   (bufwr)  swap 0 <# #S #> rot (bufwr) drop ;
 
 : TESTBUF
-  1 dup buffer cr .s (buftest) update
-  2 dup buffer cr .s (buftest) update
-  3 dup buffer cr .s (buftest) update
-  4 dup buffer cr .s (buftest) update
+  16 1 DO
+    CR ." Erase Screen " I . I dup buffer (buftest) update
+  LOOP
+  flush
 ;
 
