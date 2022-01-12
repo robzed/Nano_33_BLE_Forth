@@ -16,9 +16,9 @@ decimal
   (bufwr)  swap 0 <# #S #> rot (bufwr) drop ;
 
 : TESTBUF
-  1 dup buffer cr .s (bufwr) update
-  2 dup buffer cr .s (bufwr) update
-  3 dup buffer cr .s (bufwr) update
-  4 dup buffer cr .s (bufwr) update
+  1 dup buffer cr .s (buftest) update
+  2 dup buffer cr .s (buftest) update
+  3 dup buffer cr .s (buftest) update
+  4 dup buffer cr .s (buftest) update
 ;
 
