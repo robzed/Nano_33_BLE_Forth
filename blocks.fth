@@ -11,6 +11,8 @@ decimal
 1024 constant BLOCKSIZE
 255 constant BLANKFLASH
 (R/W_Size) BLOCKSIZE / constant BLK/FBLK
+64 constant (BLKLINELEN)
+BLOCKSIZE (BLKLINELEN) / constant (BLKHEIGHT)
 
 variable SCR 0 SCR !  \ last block shown by list
 variable BLK 0 BLK !  \ block being evaluated by load
@@ -21,9 +23,9 @@ variable BLK 0 BLK !  \ block being evaluated by load
 : (showSCR) ( u -- ) CR ." Scr# " . CR ;
 : (list#) ( line -- ) dup 10 < if space then . ; 
 : (listc) ( addr -- ) c@ dup 32 255 within if emit else drop [char] ? emit then ;
-: (listline) ( addr line -- addr+64 ) 1+ (list#) ." : " 64 0 do dup (listc) 1+ loop CR ;
+: (listline) ( addr line -- addr+64 ) 1+ (list#) ." : " (BLKLINELEN) 0 do dup (listc) 1+ loop CR ;
 : (blk2faddr) ( block -- flash-addr ) 1- BLOCKSIZE * flash_blocks_addr + ;
-: (listcore) ( buff-addr -- ) base @ swap decimal 16 0 do I (listline) loop drop base ! ;
+: (listcore) ( buff-addr -- ) base @ swap decimal (BLKHEIGHT) 0 do I (listline) loop drop base ! ;
 : (list) ( buff-addr u -- ) dup (showSCR) dup (BLKvalid) if SCR ! (listcore) else 2drop ." out of range" then ;
 : FLASHLIST ( u -- ) dup (blk2faddr) swap (list) ;
 
