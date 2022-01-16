@@ -9,10 +9,9 @@ Command Line Build Options
 
 We use (for both C and C++)
 
-    -DPF_SUPPORT_FP -DPF_NO_FILEIO -DPF_NO_INIT -DPF_NO_STDIO -DPF_USER_CHARIO="../../user_chario.h"  -I../pre_built -DPF_USER_CUSTOM="nano33ble_custom.c"
-    
-        
-    
+    -DPF_STATIC_DIC -DPF_SUPPORT_FP -DPF_NO_INIT -DPF_USER_CHARIO="../../user_chario.h" -I../pre_built -DPF_USER_CUSTOM="nano33ble_custom.c"        
+
+
 We use malloc/free and CLIB currently.
     
 

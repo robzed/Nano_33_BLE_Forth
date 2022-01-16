@@ -14,6 +14,7 @@
 #include "Arduino_interface.h"
 #include "Flash_interface.h"
 #include "IMU_interface.h"
+#include "File_system_interface.h"
 
 #undef MIN
 #undef MAX
@@ -149,6 +150,14 @@ static ucell_t heap_stats(void)
 	X( IMU_readMagneticField, "IMU_READMAGNETICFIELD", 				C_RETURNS_VALUE, 3, "( x-addr-out y-addr-out z-addr-out -- success-flag ) read magnetic field" )\
 	X( IMU_magneticFieldSampleRate, "IMU_MAGNETICFIELDSAMPLERATE", 	C_RETURNS_VOID , 1, "( float-addr-out -- ) read sample rate in Hz" )	\
 	X( IMU_magneticFieldAvailable, "IMU_MAGNETICFIELDAVAILABLE", 	C_RETURNS_VALUE, 0, "( -- new-data-flag ) new data available?" )	\
+\
+	X( filesystem_opendir, "OPENDIR", C_RETURNS_VALUE, 1, "( c-name -- dir ) ") \
+	X( filesystem_readdir, "READDIR", C_RETURNS_VALUE, 2, "( dir entry -- status ) ") \
+	X( filesystem_closedir, "CLOSEDIR", C_RETURNS_VALUE, 1, "( dir -- error ) ") \
+	X( filesystem_sizedir, "#DIR", C_RETURNS_VALUE, 1, "( dir -- u ) ") \
+	X( filesystem_sizedirentry, "XDIRENTRY", C_RETURNS_VALUE, 1, "( u -- u ) ") \
+	X( filesystem_fsremove, "FSREMOVE", C_RETURNS_VALUE, 1, "( c-name -- dir ) ") \
+	X( filesystem_fsrename, "FSRENAME", C_RETURNS_VALUE, 2, "( old-c-name new-c-name -- dir ) ") \
 
 // End of CUSTOM_FUNCTION_LIST list of custom functions, names, etc.
 

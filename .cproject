@@ -32,6 +32,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Encoder/utility}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Arduino_LSM9DS1/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Wire}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/FS_Nano33BLE/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.cpp.sketch.input.1591694447" name="CPP source files" superClass="io.sloeber.compiler.cpp.sketch.input"/>
 							</tool>
@@ -50,6 +51,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Encoder/utility}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Arduino_LSM9DS1/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Wire}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/FS_Nano33BLE/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.c.sketch.input.1198478819" name="C Source Files" superClass="io.sloeber.compiler.c.sketch.input"/>
 							</tool>
@@ -68,6 +70,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Encoder/utility}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Arduino_LSM9DS1/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/Wire}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Nano_33_BLE_Forth/libraries/FS_Nano33BLE/src}&quot;"/>
 								</option>
 								<inputType id="io.sloeber.compiler.S.sketch.input.517393813" name="Assembly source files" superClass="io.sloeber.compiler.S.sketch.input"/>
 							</tool>
@@ -78,7 +81,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="libraries/ArduinoBLE/examples|libraries/Adafruit_NeoPixel/examples|libraries/TimerOne|libraries/Keypad|libraries/IRremote|libraries/Encoder|libraries/BLEPeripheral|libraries/ArduinoLang|libraries/TimerOne/config|libraries/IRremote/pictures|libraries/Encoder/docs|libraries/ArduinoBLE/extras|pforth-master/csrc/pf_main.c|pforth-master/csrc/win32_console|pforth-master/csrc/win32|pforth-master/csrc/stdio|pforth-master/csrc/posix|libraries/ArduinoLang/docs|libraries/ArduinoLang/tests" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="pforth-master/csrc/stdio/pf_io_stdio.c|libraries/FS_Nano33BLE/platformio|libraries/ArduinoBLE/examples|libraries/Adafruit_NeoPixel/examples|libraries/TimerOne|libraries/Keypad|libraries/IRremote|libraries/Encoder|libraries/BLEPeripheral|libraries/ArduinoLang|libraries/TimerOne/config|libraries/IRremote/pictures|libraries/Encoder/docs|libraries/ArduinoBLE/extras|pforth-master/csrc/pf_main.c|pforth-master/csrc/win32_console|pforth-master/csrc/win32|pforth-master/csrc/posix|libraries/ArduinoLang/docs|libraries/ArduinoLang/tests" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

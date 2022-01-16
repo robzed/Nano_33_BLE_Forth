@@ -72,6 +72,11 @@
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/libraries/Encoder/1.4.2</locationURI>
 		</link>
 		<link>
+			<name>libraries/FS_Nano33BLE</name>
+			<type>2</type>
+			<location>/Users/rob/Documents/Arduino/libraries/FS_Nano33BLE</location>
+		</link>
+		<link>
 			<name>libraries/IRremote</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/libraries/IRremote/3.5.1</locationURI>

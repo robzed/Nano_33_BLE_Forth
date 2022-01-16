@@ -28,14 +28,6 @@ All these are programmable from Forth.
  * Support IMU 9-axis motion detector
 
 
-# Basic Arduino Functions Provided
-
-See https://www.arduino.cc/reference/en/
-
- * 'ms' - called delay() in Arduino land. ms is the forth standard word.
- * 'millis'
- * 'micros'
- * 'delayMicroseconds'
 
 
 # Accessing the terminal
@@ -44,6 +36,131 @@ pForth uses ANSI escape sequences. These haven't been changed from the original.
 
 This is the command line that I use to access pForth on the Nano 33 BLE:
     picocom --baud 115200 --imap lfcrlf /dev/cu.usbmodem1421201
+
+
+# Device Specific Words (Functions) Provided
+
+These are in additional to standard pForth words
+
+## General Functions
+
+
+### ARDUINO-IFVER
+
+Return: Return the version of the extensions
+
+
+### HEAP_STATS
+
+Return: Returns a pointer the mbed heap stats.
+
+
+
+## Arduino Functions
+
+See https://www.arduino.cc/reference/en/
+
+ * 'ms' - called delay() in Arduino land. ms is the forth standard word.
+ * 'millis'
+ * 'micros'
+ * 'delayMicroseconds'
+
+These mirror the Arduino functions in terms of parameter/return.
+
+
+## File System Interface
+
+256K of internal Flash is set up as a filesystem - using mbed and LittleFS. This allows extra user Forth words to create
+programs and applications that can be developed without reflashing the device.
+
+See https://github.com/khoih-prog/FS_Nano33BLE for details on the Framework used.
+
+We haven't considered FAT for the on-board flash - power loss robustness is poor, and it doesn't contain flash wear levelling.
+
+
+### opendir
+
+Open Directory for listing
+
+Param:  Path/Name Zero-terminated C string
+Return: Directory Object or 0 if heap allocation failure
+
+
+### readdir
+
+Read next directory entry along
+
+Param:  Directory Object
+Param:  Address - the directory entry to fill out (caller allocated)
+Return: 1 on reading a filename, 0 at end of directory, negative error on failure 
+
+
+### closedir
+
+Call when finished with directory, frees up memory from heap.
+
+Param:  Directory Object
+Return: 0 on success, negative error code on failure 
+
+
+### #dir
+
+Get the sizeof the directory (number of entries)
+
+Param:  Directory Object
+Return: Number of files in the directory
+
+
+### XDIRENTRY
+
+Get various parameters about dir entry structure
+
+Param:  selector, see below
+Return: Value in bytes
+
+#### Selector values
+
+0 = Size of whole directory entry structure
+1 = Offset of name in structure
+2 = Max number of bytes in name possible (excluding zero terminator)
+3 = Offset of type in structure
+4 = Size of name field
+5 = Size of type field
+
+
+### fsremove
+
+Remove a file from the filesystem
+
+Param:  Path/Name Zero-terminated C string
+Return: 0 on success, non-zero on error
+
+
+### fsrename(ucell_t old_c_name_ptr, ucell_t new_c_name_ptr);
+
+Rename a file
+
+Param:  Old Path/Name Zero-terminated C string
+Param:  New Path/Name Zero-terminated C string
+Return: 0 on success, non-zero on error
+
+
+## IMU Motion Sensor Interface
+
+
+## BLE Interface
+
+
+## NeoPixel Interface
+
+
+## Raw Flash Interface
+
+NOTICE: Using this interface without disabling the filesystem (or changing the addresses of either the 
+raw flash or filesystem) will result in data loss!
+
+
+
 
 
 
@@ -77,120 +194,34 @@ with the correct plug-ins. The standard Arduino IDE will no do because of the fo
 commands required.
 
 
-# Blocks Support
-
-## Overview
-
-Since less than half of the flash is used, the second half is used for Forth blocks. Blocks
-is a simple system used on Forth to save/load forth definitions. It's much simpler than
-a full file system.
-
-The Arduino flash block size for this chip is 4KBytes, which relates to Four 1K Forth blocks.
-
-On loading a single block, internally it also caches another 3 blocks so that it can write
-back an entire 4K flash block when saved. The buffers are algined with the flash block start.
-
-You can avoid using any Forth block words, and just use the raw (R/W) word, which reads or writes (actually 
-erase then writes) a 4KByte flash block. NOTICE: The first block is 0. 
-
-
-## Alternatives Considered
-
-Blocks are simple and easy, but not to everyone's liking. File systems (simple records 
-or more full filename based) are often better for more advanced purposes. See the comment at 
-the top of 'Flash_interface.cpp' for two options that give options more advanced than Blocks. 
-
-
-
-## Block Words
-
-The following words will be supported in future:
- * LIST ( u -- ) show the Forth block u, shown as 16 lines of 64 characters.
- * SCR  ( -- addr ) address of a variable that hold the last block shown by list.
- * LOAD ( u -- ) load (interpret) the Forth block u
- * BLOCK ( u -- a-addr) return a buffer for the block. If necessary (not already cached) read the block from Flash
- * BUFFER ( u -- a-addr) return an empty buffer for block
- * UPDATE ( -- ) mark the curr block as to be written.
- * EMPTY-BUFFERS ( -- ) Drop all buffers without saving (effectively mark all internal buffers as unassigned).
- * SAVE-BUFFERS ( -- ) Save all changed blocks to Flash. Mark as not updated.
- * FLUSH ( -- ) save-buffers then empty_buffers
- * RXTEXTBLOCK ( u -- ) write a block from the input terminal directly to a block. LF selects the next line (skipping next 64)
- * (R/W)  (addr u f -- errCode ) Low level Flash block read/write word. flag 1=read, 0=write, addr = buffer address, u=flash block number. Always transfers 4096 bytes!
-
- Notice buffer address returned by BLOCK and BUFFER are transient. See Forth standard 7.3.2. 
- 
- ## Future Block Words
-
- * EDIT ( -- ) basic screen editor of the current (most recent) block referenced by LIST
- * THRU ( u1 u2 -- ) load (interpret) the Forth blocks u1 to u2, inclusive.
- * UPDATED? ( u -- f ) is the block u is marked updated?
- * EMPTY-BUFFER ( u -- ) drop buffer without saving, losing changes.
- * SAVE-BUFFER ( u -- ) save a specific block to Flash (if changed). Mark as not updated.
- * +LOAD ( u -- ) load the block specified as the current block + u - used with load/thru to chain. NOTE: If current in THRU - this will override. 
- * +THRU ( u1 u2 -- ) load current block + u1 to current block + u2 - used with load/thru to chain. NOTE: If current in THRU - this will override.
- 
- ## Block notes
-
-First Forth block number is 1. (But 4K Flash blocks start at 0).
-
-Sometimes 'shadow screens' are used - code in odd block numbers, comments in even block 
-numbers, but this is by convention and the block system does not enforce this.  
-
-Typcially block 1 contains a number of thru/load command to load the whole application.
-
-On boot, the Forth system will try to load block 1. Any error will cause it abort the
-load and drop back to the command line.
-
-The last character of one 64 byte line wraps straight into the first character of the following line so 
-there is no newline, or other line divider in the blocks.  
-
-The word \ (comment to end of line) operates differently for blocks - specifically it causes all characters until the 
-end of the current 64-character 'line' to be ignored. This is done with character-position % 64 + 1.
-
-No interpretation is given to characters > 128, so you can set your terminal to UTF-8 if necessary, and
-you will get less than 64 characters per line. Conversely you light use Windows-1252 or other 8 bit 
-character sets. Obviously if you share code with others you'll need to specify the encoding.
-
-Forth doesn't care - as long as the byte code is >32, it will be fine, except 0xFF is used as a blank flash
-in Forth word 'LIST'.
-
-
-
-## Important NOTES about Flash wear
-
-Each 4KByte block has 10000 erase/write cycles. Since when a Forth block is written, we 
-erase and write all the 
-
-If you use this for normal Forth words or general notes you are 	unlikely to hit this limit. 
-e.g. 2 writes for a specfic block every day, would give over 13 years before the 
-manufacturer limit was exceeded.
-
-If you are going to use these for settings (some sort of non-volatile storage of sensor readings, 
-mode, set state, then you will need to use some more advanced methodology - depending on 
-the frequency of writing your data. In fact, you might want to NOT use Forth blocks 
-for this use, since multiple writes are allowed to a single Flash block before an erase - but 
-not by this Forth block system. This is outside of the scope of this Forth, but it's 
-generally provided by wear leveling file systems, or specific NVM emulation for flash 
-functions. Please see the Nordic documentation for details and potential application notes.
-
-## Important NOTES about Power Loss
-
-If you lose power when writing, then the four Forth blocks are at risk of being lost - both
-old and new. It is critical you backup the data on your device - for example by listing
-all blocks and saving them to your local machine. 
 
 
 # Important Note about errors
 
 Some functions return errors. 
 
-However, BLE or Neopixel memory allocation failures will cause a C++ exception, which not if caught, 
+However, BLE and Neopixel memory allocation failures will cause a C++ exception, which not if caught, 
 and will cause an reset. Consideration was given to returning a zero using new (std::nothrow) to 
 avoid exceptions, but it didn't look like a massive improvement - since then the Forth code
 because more complex for an error that probably won't happen. So it was left. This strategy probably 
 needs to be revewied. 
 
+However, the File System Interface Directory entry doesn't throw errors, and instead returns a 0.
 
+
+
+# Notes about files
+
+## Important NOTES about data Loss
+
+If you lose power when writing, then most recent changes will be lost.
+
+Additionally, the device might fail. Perhaps this is a chance event, a flash failure, a static discharge
+to the device (by hands, electrical spike or other source) or an overvoltage could cause the device to die
+and be unrecoverable.
+
+For both reasons it is critical you backup the data on your device - for example by listing 
+all files and saving them to your local machine. It's likely that a failed device 
 
 
 # General Code Structure
@@ -200,9 +231,10 @@ At the core it's a port of pforth with the minimum number of changes.
 On top of this we include Arduino & mbed libraries, create C wrappers and export them as part of the custom
 function table. We try to make these C wrappers as small as possible. 
 
-We then build forth definitions to support some functions (like Blocks) into a prebuilt pfdicdat.h.
+The original plan was to build extra forth definitions to support some functions (like Blocks) into a prebuilt 
+pfdicdat.h. However, at the moment the pfdicdat.h doesn't contain any Forth definitions beyond standard pForth.
 
-The forth blocks are not used for basic functionality and are entirely available for user extension.
+The on chip file system is not used for basic functionality and are entirely available for user extension.
 
 
 
@@ -210,6 +242,8 @@ The forth blocks are not used for basic functionality and are entirely available
 
  * Add more standard Arduino functions
  * Create a split dictionary, so copy to RAM isn't required (maybe just name area, not code area that has variables)
- * Add support for multi-coloured LED
+ * Add support for on-board multi-coloured LED
  * Support other features of Arduino Nano 33 BLE Sense board
+ * Support BLOCKS as an alternative option to files
+ 
 
