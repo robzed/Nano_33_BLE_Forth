@@ -175,6 +175,7 @@ cell_t BLESERVICE(cell_t uuid_cstring)
 
 void BLESERVICE_ADDCHARACTERISTIC(cell_t service, cell_t characteristic)
 {
+	if(service == 0) { return; }
 	BLEService* s = (BLEService*)service;
 	BLECharacteristic* c = (BLECharacteristic*)characteristic;
 	s->addCharacteristic(*c);
@@ -182,6 +183,7 @@ void BLESERVICE_ADDCHARACTERISTIC(cell_t service, cell_t characteristic)
 
 cell_t BLESERVICE_CHARACTERISTICCOUNT(cell_t service)
 {
+	if(service == 0) { return 0; }
 	BLEService* s = (BLEService*)service;
 	return s->characteristicCount();
 }
@@ -229,6 +231,7 @@ cell_t BLECHAR(cell_t uuid, cell_t properties, cell_t valueSize, cell_t fixed_si
 // Note writing an integer (signed/unsigned 8, 16, 32 bit is just a string read... so we leave the forth to deal with this)
 cell_t BLECHAR_WRITEVALUE(cell_t ble_characteristic, cell_t value, cell_t len)
 {
+	if(ble_characteristic == 0) { return 0; }
 	BLECharacteristic* ble_char_ptr = (BLECharacteristic*)ble_characteristic;
 	return ble_char_ptr->writeValue((uint8_t*)value, len);		// returns 1 on success, 0 on failure
 }
@@ -236,6 +239,7 @@ cell_t BLECHAR_WRITEVALUE(cell_t ble_characteristic, cell_t value, cell_t len)
 // Note reading an integer (signed/unsigned 8, 16, 32 bit is just a string read...)
 cell_t BLECHAR_READVALUE(cell_t ble_characteristic, cell_t value, cell_t len)
 {
+	if(ble_characteristic == 0) { return 0; }
 	BLECharacteristic* ble_char_ptr = (BLECharacteristic*)ble_characteristic;
 	return ble_char_ptr->readValue((uint8_t*)value, len);		// returns number of bytes read
 }
@@ -273,6 +277,7 @@ void BLECHAR_SETEVENTHANDLER(cell_t ble_characteristic, cell_t event, cell_t han
 
 void BLECHAR_ADDDESCRIPTOR(cell_t ble_characteristic, cell_t descriptor)
 {
+	if(ble_characteristic == 0) { return; }
 	BLECharacteristic* ble_char_ptr = (BLECharacteristic*)ble_characteristic;
 	ble_char_ptr->addDescriptor(*(BLEDescriptor*)descriptor);
 }
