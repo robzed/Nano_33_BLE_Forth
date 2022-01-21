@@ -50,7 +50,7 @@ def parse_line(ser, lineout):
         # accept no OK and no error (timeout condition
         rx_status = ".."
     else:
-        print("unexpected", repr(expect), repr(data))
+        print("unexpected", repr(data))
         rx_status = "??"
         status = False
 
