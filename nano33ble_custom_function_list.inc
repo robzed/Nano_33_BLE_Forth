@@ -121,10 +121,10 @@
 	X( filesystem_fsremove, "FSREMOVE", C_RETURNS_VALUE, 1, "( c-name -- dir ) ")
 	X( filesystem_fsrename, "FSRENAME", C_RETURNS_VALUE, 2, "( old-c-name new-c-name -- dir ) ")
 #endif
-	X( filesystem_stat, "FSSTAT", C_RETURNS_VALUE, 2, "( c-name output_buff -- error ) ")
-	X( filesystem_statvfs, "FSSTATVFS", C_RETURNS_VALUE, 2, "( c-name output_buff -- error ) ")
+	X( filesystem_fsstat, "FSSTAT", C_RETURNS_VALUE, 2, "( c-name output_buff -- error ) ")
+	X( filesystem_statvfs, "STATVFS", C_RETURNS_VALUE, 2, "( c-name output_buff -- error ) ")
 	X( filesystem_XFSSTAT, "XFSSTAT", C_RETURNS_VALUE, 1, "( selector -- size ) ")
-	X( filesystem_XFSSTATVFS, "XFSSTATVFS", C_RETURNS_VALUE, 1, "( selector -- size ) ")
+	X( filesystem_XSTATVFS, "XSTATVFS", C_RETURNS_VALUE, 1, "( selector -- size ) ")
 
 // End of CUSTOM_FUNCTION_LIST list of custom functions, names, etc.
 
