@@ -74,13 +74,16 @@ cell_t filesystem_closedir(ucell_t dir_ptr) { return 0; }
 ucell_t filesystem_sizedir(ucell_t dir_ptr) { return 0; }
 
 ucell_t filesystem_sizedirentry(ucell_t select) { return 0; }
+
+#ifdef SEPERATE_REMOVE_RENAME
 cell_t filesystem_fsremove(ucell_t c_name_ptr) { return 0; }
 cell_t filesystem_fsrename(ucell_t old_c_name_ptr, ucell_t new_c_name_ptr) { return 0; }
+#endif
 
-ucell_t filesystem_stat(ucell_t c_name_ptr, ucell_t output_buff) { return 0; }
+ucell_t filesystem_fsstat(ucell_t c_name_ptr, ucell_t output_buff) { return 0; }
 ucell_t filesystem_statvfs(ucell_t c_name_ptr, ucell_t output_buff) { return 0; }
 ucell_t filesystem_XFSSTAT(ucell_t select) { return 0; }
-ucell_t filesystem_XFSSTATVFS(ucell_t select) { return 0; }
+ucell_t filesystem_XSTATVFS(ucell_t select) { return 0; }
 
 #endif
 
