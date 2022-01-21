@@ -68,7 +68,11 @@ See https://www.arduino.cc/reference/en/
 These mirror the Arduino functions in terms of parameter/return.
 
 
-## File System Interface
+## File System Interface - Standard pForth / Forth
+
+
+
+## File System Interface - Extensions
 
 256K of internal Flash is set up as a filesystem - using mbed and LittleFS. This allows extra user Forth words to create
 programs and applications that can be developed without reflashing the device.
@@ -128,21 +132,46 @@ Return: Value in bytes
 5 = Size of type field
 
 
-### fsremove
+### FSSTAT
 
-Remove a file from the filesystem
+Store information about the file in a stat structure
 
 Param:  Path/Name Zero-terminated C string
-Return: 0 on success, non-zero on error
+Param:  address of output buffer to store stat data (user allocated)
+Return: error number
 
 
-### fsrename(ucell_t old_c_name_ptr, ucell_t new_c_name_ptr);
 
-Rename a file
+### STATVFS
 
-Param:  Old Path/Name Zero-terminated C string
-Param:  New Path/Name Zero-terminated C string
-Return: 0 on success, non-zero on error
+Store information about the mounted file system in a statvfs structure. 
+
+Param:  Path/Name Zero-terminated C string
+Param:  address of output buffer to store stat data (user allocated)
+Return: error number
+
+
+
+### XFSSTAT
+
+Get various parameters about stat structure
+
+Param:  selector, see below
+Return: Value in bytes
+
+0 = Size of stat structure
+
+
+### XSTATVFS
+
+Get various parameters about statvfs structure
+
+Param:  selector, see below
+Return: Value in bytes
+
+0 = Size of statvfs structure
+
+
 
 
 ## IMU Motion Sensor Interface

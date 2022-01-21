@@ -16,10 +16,11 @@ extern mbed::LittleFileSystem& get_FileSystem(void);
 
 using mbed::Dir;
 
-//ucell_t forth_mkdir(ucell_t c_name_ptr)
-//{
-//
-//}
+ucell_t filesystem_mkdir(ucell_t c_name_ptr, ucell_t mode)
+{
+	mbed::FileSystem* fs = mbed::FileSystem::get_default_instance();
+	return fs->mkdir((const char*)c_name_ptr, (mode_t) mode);
+}
 
 ucell_t filesystem_opendir(ucell_t c_name_ptr)
 {
@@ -83,11 +84,48 @@ ucell_t filesystem_sizedir(ucell_t dir_ptr)
 	return d->size();
 }
 
-//ucell_t filesystem_fssize(void)
-//{
-//	mbed::LittleFileSystem& fs = get_littleFileSystem();
-//	return fs.
-//}
+
+ucell_t filesystem_fsstat(ucell_t c_name_ptr, ucell_t output_buff)
+{
+	mbed::FileSystem* fs = mbed::FileSystem::get_default_instance();
+	return fs->stat((const char*)c_name_ptr, (struct stat *) output_buff);
+}
+
+ucell_t filesystem_statvfs(ucell_t c_name_ptr, ucell_t output_buff)
+{
+	mbed::FileSystem* fs = mbed::FileSystem::get_default_instance();
+	return fs->statvfs((const char*)c_name_ptr, (struct statvfs *) output_buff);
+}
+
+ucell_t filesystem_XFSSTAT(ucell_t select)
+{
+	ucell_t result = 0;
+	switch(select) {
+		case 0:
+			result = sizeof(struct stat);
+			break;
+		default:
+			result = -1;
+			break;
+	}
+	return result;
+}
+ucell_t filesystem_XSTATVFS(ucell_t select)
+{
+	ucell_t result = 0;
+	switch(select) {
+		case 0:
+			result = sizeof(struct statvfs);
+			break;
+		default:
+			result = -1;
+			break;
+	}
+	return result;
+}
+
+
+#ifdef SEPERATE_REMOVE_RENAME
 
 cell_t filesystem_fsremove(ucell_t c_name_ptr)
 {
@@ -100,3 +138,4 @@ cell_t filesystem_fsrename(ucell_t old_c_name_ptr, ucell_t new_c_name_ptr)
 }
 
 
+#endif
